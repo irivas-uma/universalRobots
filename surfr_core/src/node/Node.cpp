@@ -650,7 +650,7 @@ tfList.push_back(*_origin);
   // Reference Frame of Robot Links
     if (_robot) {
       ros::V_string        links = _robot->links_name();
-      Eigen::Affine3d      T;
+      Eigen::Isometry3d      T;
       for (ros::V_string::iterator it = links.begin(); it != links.end(); it++) {
 // if (*it != (_dev->name() + "/root_link")) {
         T = _robot->transform(*it);

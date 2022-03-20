@@ -9,7 +9,7 @@
   <!-- arm -->
   <xacro:ur3_robot prefix="$(arg prefix)/" joint_limited="false" tcp_position="$(arg tcp_position)" tcp_orientation="$(arg tcp_orientation)" />
 
-  <link name="$(arg origin_name)" />
+<link name="$(arg origin_name)" />
   <joint name="$(arg prefix)/$(arg origin_name)_fixed_joint" type="fixed">
     <parent link="$(arg origin_name)" />
     <child link = "$(arg prefix)/root_link" />

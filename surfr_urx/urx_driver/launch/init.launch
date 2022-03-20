@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch><!-- NOTE: MUST CREATE A LAUNCH FILE FOR EACH ROBOT (UR3, UR5, UR10) -->
-   <arg default="172.16.48.129" name="ip"/> <!-- IP address to open channel communication. Disabled on simulation mode      -->
+   <arg default="172.16.211.128" name="ip"/> <!-- IP address to open channel communication. Disabled on simulation mode      -->
    <arg default="true" name="urdf"/> <!-- Visualize virtual environment. Valid values: {true|false}.                 -->
    <arg default="0.0 0.0 0.0" name="tcp_position"/> <!-- Adds a position offset for the Tool Center Point                           -->
    <arg default="0.0 0.0 0.0" name="tcp_orientation"/> <!-- Adds a orientation offset for the Tool Center Point                        -->
@@ -63,5 +63,6 @@
       <remap from="robot_description" to="$(arg devid)/urdf/model"/>
       <remap from="joint_states" to="$(arg devid)/inputs/move_joints"/>
    </node><!--  <rosparam ns="$(arg devid)/planners" command="load" file="$(find urx_driver)/yaml$(env ROS_DISTRO)/planners.yaml" />-->
+
 </launch>
 

@@ -126,7 +126,7 @@ std::vector<double_t> Manipulator::joints_position() {
   //~ return joints;
 //~ }
 
-std::vector<double_t> Manipulator::joints_ik(Eigen::Affine3d& transform) {
+std::vector<double_t> Manipulator::joints_ik(Eigen::Isometry3d& transform) {
   std::vector<double_t> ret(_nojoints);
 
   bool isIK = _state->setFromIK(_group, this->transform(*(_links.begin()))*transform, 10, 0.1);
@@ -141,7 +141,7 @@ std::vector<double_t> Manipulator::joints_ik(Eigen::Affine3d& transform) {
 std::vector<double_t> Manipulator::joints_ik(const std::vector<double_t>& pose) {
   Eigen::Vector3d Pik(pose[0], pose[1], pose[2]);
   Eigen::Vector3d Aik(pose[3], pose[4], pose[5]);
-  Eigen::Affine3d Tik = Eigen::Translation3d(Pik)*Eigen::Affine3d(Eigen::AngleAxisd(Aik.norm(), Aik/Aik.norm()))*
+  Eigen::Isometry3d Tik = Eigen::Translation3d(Pik)*Eigen::Isometry3d(Eigen::AngleAxisd(Aik.norm(), Aik/Aik.norm()))*
                         Eigen::Translation3d(Eigen::Vector3d(0.0, 0.0, -0.035));
   // std::cout << "T0: " << std::endl << (this->transform(*(_links.begin()))).matrix() << std::endl;
   // std::cout << "Tik: " << std::endl << Tik.matrix() << std::endl;
@@ -155,7 +155,7 @@ std::vector<std::string> Manipulator::links_name() {
 }
 
 std::vector<double> Manipulator::pose(const uint8_t& mode) {
-  Eigen::Affine3d T = ((mode == LOCAL_FRAME) ? (_inv_root*this->transform()) : this->transform());
+  Eigen::Isometry3d T = ((mode == LOCAL_FRAME) ? (_inv_root*this->transform()) : this->transform());
     Eigen::Vector3d   P(T.translation());
     Eigen::AngleAxisd R(T.rotation());
     Eigen::Vector3d   A(R.axis()*R.angle());
@@ -163,7 +163,7 @@ std::vector<double> Manipulator::pose(const uint8_t& mode) {
   return ret;
 }
 
-Eigen::Affine3d Manipulator::transform(const std::string &link) {
+Eigen::Isometry3d Manipulator::transform(const std::string &link) {
   ros::V_string::iterator l = std::find(_links.begin(), _links.end(), (link == "") ? _links.back() : link);
 
   // Base link (first) or Tool link (last)
@@ -171,7 +171,7 @@ Eigen::Affine3d Manipulator::transform(const std::string &link) {
     return _state->getGlobalLinkTransform(*l);
   // Requested link not found
   } else if (l == _links.end()) {
-    return Eigen::Affine3d(Eigen::Matrix4d::Identity());
+    return Eigen::Isometry3d(Eigen::Matrix4d::Identity());
   // Any other valid link
   } else {
     // return _state->getGlobalLinkTransform(*(l-1)).inverse()*_state->getGlobalLinkTransform(*l);

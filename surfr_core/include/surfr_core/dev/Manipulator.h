@@ -84,10 +84,10 @@ namespace surfr { namespace dev {
     std::vector<double_t>    joints_position();
     //~ std::vector<double_t>    joints_velocity();
     //~ std::vector<double_t>    joints_acceleration();
-    std::vector<double_t>    joints_ik(Eigen::Affine3d& transform);
+    std::vector<double_t>    joints_ik(Eigen::Isometry3d& transform);
     std::vector<double_t>    joints_ik(const std::vector<double_t>& pose);
     std::vector<double_t>    pose(const uint8_t& mode = GLOBAL_FRAME);
-    Eigen::Affine3d          transform(const std::string &link = "");
+    Eigen::Isometry3d          transform(const std::string &link = "");
     Eigen::MatrixXd          jacobian();
     //~ friend std::ostream& operator<<(std::ostream& stream, const DeviceBase& dev);
 
@@ -107,7 +107,7 @@ namespace surfr { namespace dev {
     robot_state::JointModelGroup*         _group;                               // Group of joints from the Robot Model.
     std::vector<std::string>              _joints;                              // Joint values for the current state.
     std::vector<std::string>              _links;                               // Link values for the current state.
-    Eigen::Affine3d                       _inv_root;                            // Inverse transform for the root link.
+    Eigen::Isometry3d                       _inv_root;                            // Inverse transform for the root link.
 
     //~ std::string _message(const std::string& method,
                          //~ const std::string& msg,
