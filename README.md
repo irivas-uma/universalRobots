@@ -39,9 +39,13 @@ Then open a terminal (ctrl+alt+T) in your computer and ping the robot to check t
 
 ## ERRORES DETECTADOS
 * error #define EIGEN_STATIC_ASSERT(X,MSG) static_assert(X,#MSG);
+
 Solución: 
+
 Running this on the repo fixed the error mentioned above:
+```bash
 find ./ -type f -exec sed -i 's/Isometry3d/Isometry3d/g' {} \;
+```
 
 * Si después de esto sigue dando error, borrar las carpetas devel y build, y volver a hacer el catkin_make. 
 
